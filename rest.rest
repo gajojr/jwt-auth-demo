@@ -2,11 +2,12 @@ GET http://localhost:4000/
 
 ###
 
-POST http://localhost:4000/
+POST http://localhost:4000/register
 content-type: application/json
 
 {
-    "username": "andrija"
+    "username": "kimi",
+    "password": "ona"
 }
 
 ###
@@ -15,5 +16,6 @@ POST http://localhost:4000/login
 content-type: application/json
 
 {
-    "username": "gaser"
+    "username": "kimi",
+    "password": "ona"
 }

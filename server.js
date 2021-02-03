@@ -1,29 +1,55 @@
 const express = require('express');
 const app = express();
 
-const { dbConnection, addUser, userLogin } = require('./db/mongoose');
+const { dbConnection, registerUser, userLogin } = require('./db/mongoose');
 
 const PORT = process.env.PORT || 4000;
 
-app.use(express.json())
+// middleware 
+app.use((req, res, next) => {
+    // console.log(req.method, req.path);
+    // if (req.method === 'GET') {
+    //     res.send('GET request are disabled');
+    // } else {
+    //     next();
+    // }
+    res.status(503).send('Site is under maintenance');
+});
+
+app.use(express.json());
+if (process.env.NODE_ENV === 'production') {
+    const helmet = require('helmet');
+    app.use(helmet());
+}
 
 dbConnection();
 
 app.get('/', async(req, res) => {
-    await res.send('Ide gas');
+    try {
+        res.send('Get request succesful');
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
-app.post('/', async(req, res) => {
-    console.log(req.body);
-    const user = await req.body;
-    addUser(user);
-    res.send(user);
+app.post('/register', async(req, res) => {
+    try {
+        const user = await req.body;
+        const token = await registerUser(user);
+        res.send({ user, token });
+    } catch (err) {
+        res.status(500).send(err);
+    }
 })
 
 app.post('/login', async(req, res) => {
-    const username = await req.body.username;
-    const dateToSend = await userLogin(username);
-    res.send(dateToSend);
+    try {
+        const user = await req.body;
+        const dataToSend = await userLogin(user);
+        res.send(dataToSend);
+    } catch (err) {
+        res.status(400).send(err);
+    }
 })
 
 app.listen(PORT);

@@ -1,24 +1,46 @@
 const mongoose = require('mongoose');
-const { User } = require('./models/UserModel');
+const bcrypt = require('bcryptjs');
+const User = require('./models/UserModel');
 
 async function dbConnection() {
     await mongoose.connect('mongodb://localhost:27017/jwt-auth', {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     });
 }
 
-async function addUser(userInfo) {
-    await User.create({...userInfo });
+async function registerUser(userInfo) {
+    const user = new User(userInfo);
+    await user.save();
+
+    const token = await user.generateAuthToken();
+
+    return token;
 }
 
-async function userLogin(username) {
+async function userLogin(userInfo) {
+    const { username, password } = userInfo;
     const user = await User.findOne({ username });
-    return user.date.toString();
+
+    if (!user) {
+        return 'no user found';
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        return 'access denied';
+    }
+
+    const token = await user.generateAuthToken();
+
+    // return user.date.toString();
+    return { user, token };
 }
 
 module.exports = {
     dbConnection,
-    addUser,
+    registerUser,
     userLogin
 }
