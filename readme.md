@@ -11,4 +11,4 @@ This project uses **MongoDB** and **mongoose** npm package, in this example I co
 It's recommended to use .env which you will put in root of your project, there you should put your mongodb connection string and any other sensitive data.
 
 ## HTTP requests
-To test this application I used rest client, that's vs code extension, which allows me to easily make HTTP requests, you can see all the requests I used to test this app, first you should create user, then try to login, logout from one session or all sessions. To use rest.rest you'll need to install vs code [extension]
+To test this application I used rest client, that's vs code extension, which allows me to easily make HTTP requests, you can see all the requests I used to test this app, first you should create user, then try to login, logout from one session or all sessions. To use rest.rest you'll need to install vs code [extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
