@@ -23,10 +23,21 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+// we use this NOT to send password in response
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+}
+
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
 
-    const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_KEYWORD, { expiresIn: '7 days' });
+    const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_KEYWORD, { expiresIn: '10 days' });
 
     user.tokens = user.tokens.concat({ token });
     await user.save();

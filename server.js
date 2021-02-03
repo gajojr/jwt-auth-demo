@@ -45,6 +45,7 @@ app.post('/login', async(req, res) => {
         const dataToSend = await userLogin(user);
         res.send(dataToSend);
     } catch (err) {
+        console.log(err)
         res.status(400).send(err);
     }
 });
