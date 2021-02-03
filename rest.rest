@@ -1,7 +1,6 @@
 GET http://localhost:4000/
 
 ###
-
 POST http://localhost:4000/register
 content-type: application/json
 
@@ -11,7 +10,6 @@ content-type: application/json
 }
 
 ###
-
 POST http://localhost:4000/login
 content-type: application/json
 
@@ -19,3 +17,16 @@ content-type: application/json
     "username": "kimi",
     "password": "ona"
 }
+
+###
+GET http://localhost:4000/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFhOWQwMmE5ZGY1NjEyMzAxZjY4NDUiLCJpYXQiOjE2MTIzNTY4NzAsImV4cCI6MTYxMjk2MTY3MH0.UDs_DNNRTXtfLdqPYEc3slkNI5XsRn1jYj9T8qLMriE
+
+###
+POST http://localhost:4000/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFhOWQwMmE5ZGY1NjEyMzAxZjY4NDUiLCJpYXQiOjE2MTIzNTY4NjYsImV4cCI6MTYxMjk2MTY2Nn0.-XXSpgf5dQztapymtZbFt7ze0x8n9kHWfKplAPr2BvQ
+
+###
+POST http://localhost:4000/logoutAll
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDFhOWQwMmE5ZGY1NjEyMzAxZjY4NDUiLCJpYXQiOjE2MTIzNTY4NzAsImV4cCI6MTYxMjk2MTY3MH0.UDs_DNNRTXtfLdqPYEc3slkNI5XsRn1jYj9T8qLMriE
+
